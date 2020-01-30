@@ -8,6 +8,8 @@ ARG VCS_REF=none
 
 FROM fluent/fluentd:${BUILD_FLUENTD_VERSION}
 
+USER root
+
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
