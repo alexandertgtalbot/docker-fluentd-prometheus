@@ -8,16 +8,16 @@ ARG VCS_REF=none
 
 FROM fluent/fluentd:${BUILD_FLUENTD_VERSION}
 
-USER root
 
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
+USER root
 RUN \
  gem install fluent-plugin-prometheus -v "${BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION}" \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
-
 USER fluent
+
 ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
