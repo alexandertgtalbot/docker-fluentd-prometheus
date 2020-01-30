@@ -12,7 +12,7 @@ FROM fluentd:${BUILD_FLUENTD_VERSION}
 # Docker creates a layer for every RUN-Statement
 # therefore an 'apk delete' has no effect
 RUN \
- gem install fluent-plugin-prometheus -v ${BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION} \
+ gem install fluent-plugin-prometheus -v "${BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION}" \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
 USER fluent
