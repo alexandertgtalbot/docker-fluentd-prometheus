@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Custom build for Docker Hub
+# see: https://medium.com/microscaling-systems/labelling-automated-builds-on-docker-hub-f3d073fb8e1
+
+echo ""
+echo " BUILD_DATE                             : ${BUILD_DATE}"
+echo " BUILD_DOCKER_TAG                       : ${BUILD_DOCKER_TAG:-test}"
+echo " BUILD_FLUENTD_VERSION                  : ${BUILD_FLUENTD_VERSION}"
+echo " BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION: ${BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION}"
+echo " BUILD_VERSION                          : ${BUILD_VERSION}"
+echo " DOCKER_IMAGE_NAME                      : ${DOCKER_IMAGE_NAME}"
+echo " DOCKER_NAME_SPACE                      : ${DOCKER_NAME_SPACE}"
+echo " VCS_REF                                : ${GIT_SHA1}"
+echo ""
+
+docker build \
+  --file Dockerfile \
+  --rm \
+  --compress \
+  --build-arg BUILD_DATE=${BUILD_DATE} \
+  --build-arg BUILD_FLUENTD_VERSION=${BUILD_FLUENTD_VERSION} \
+  --build-arg BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION=${BUILD_FLUENTD_PLUGIN_PROMETHEUS_VERSION} \
+  --build-arg BUILD_VERSION=${BUILD_VERSION} \
+  --build-arg VCS_REF=${GIT_SHA1} \
+  --tag ${DOCKER_NAME_SPACE}/${DOCKER_IMAGE_NAME}:${BUILD_DOCKER_TAG:-test} .
